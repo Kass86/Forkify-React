@@ -164,6 +164,10 @@
     margin-top: 0.1rem;
   }
 
+  &__info-icon-heart {
+    transform: translateY(0.7rem) !important;
+  }
+
   &__quantity {
     margin-right: 0.5rem;
     flex: 0 0 auto;

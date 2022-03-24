@@ -66,13 +66,19 @@ export const AddRecipeModal = () => {
           body: JSON.stringify(newRecipe),
         }
       ).then((res) =>
-        res.json().then((re) => {
-          console.log(re);
-          stopSpinner("modal");
-          setUploaded(true);
+        res
+          .json()
+          .then((re) => {
+            // console.log(re);
+            if (re.status === "fail") throw new Error(`${re.message}`);
+            stopSpinner("modal");
+            setUploaded(true);
 
-          setRecipeCreated(re.data.recipe);
-        })
+            setRecipeCreated(re.data.recipe);
+          })
+          .catch((err) =>
+            alert(`We have some error with sever on <RecipeView>: ${err}`)
+          )
       );
     }
   }, [error, newRecipe, setRecipeCreated]);
@@ -94,6 +100,9 @@ export const AddRecipeModal = () => {
       <div className={`add-recipe-window ${!openModal ? "hidden" : ""}`}>
         <button
           onClick={() => {
+            setTimeout(() => {
+              stopSpinner("modal");
+            }, 500);
             setOpenModal((prev) => {
               return !prev;
             });

@@ -17,13 +17,18 @@ export const Header = () => {
       `https://forkify-api.herokuapp.com/api/v2/recipes/?search=${searchValue}&key=cbc2d4f0-4cd9-4886-90b8-2743d93b88b8
       `
     ).then((res) =>
-      res.json().then((re) => {
-        // console.log(re);
-        stopSpinner("search");
-        setSearchValue("");
-        if (re.status === "fail") throw new Error(`${re.message}`);
-        setResults(re);
-      })
+      res
+        .json()
+        .then((re) => {
+          // console.log(re);
+          stopSpinner("search");
+          setSearchValue("");
+          if (re.status === "fail") throw new Error(`${re.message}`);
+          setResults(re);
+        })
+        .catch((err) =>
+          alert(`We have some error with sever on <HeaderView>: ${err}`)
+        )
     );
 
     setSearch(""); // clear search

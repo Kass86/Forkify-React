@@ -10,6 +10,7 @@ import {
   IoPerson,
   IoCheckmarkOutline,
   IoRestaurantOutline,
+  IoHeartOutline,
 } from "react-icons/io5";
 
 export const Recipe = () => {
@@ -47,13 +48,23 @@ export const Recipe = () => {
       `https://forkify-api.herokuapp.com/api/v2/recipes/${selected}?key=cbc2d4f0-4cd9-4886-90b8-2743d93b88b8
       `
     ).then((res) =>
-      res.json().then((re) => {
-        stopSpinner("recipe");
-        setRecipe(re.data.recipe);
-        // console.log(re.data.recipe);
-        //may not use usestate serving by use recipe.servings and setRecipe((prev)=> [...prev, servings: prev.servings + 1])
-        setServing(re.data.recipe.servings);
-      })
+      res
+        .json()
+        .then((re) => {
+          if (re.status === "fail") throw new Error(`${re.message}`);
+          // console.log(re);
+          stopSpinner("recipe");
+
+          // I put "?" in data.recipe and re.data.recipe to make sure app still work when the URL source is down
+
+          setRecipe(re.data?.recipe);
+          // console.log(re.data.recipe);
+          //may not use usestate serving by use recipe.servings and setRecipe((prev)=> [...prev, servings: prev.servings + 1])
+          setServing(re.data.recipe?.servings);
+        })
+        .catch((err) =>
+          alert(`We have some error with sever on <RecipeView>: ${err}`)
+        )
     );
   }, [selected]);
 
@@ -67,7 +78,12 @@ export const Recipe = () => {
         <div className="message">
           <br />
           <br />
-          <p>Start by searching for a recipe or an ingredient. Have fun!</p>
+
+          <p>
+            {" "}
+            <IoHeartOutline className="recipe__info-icon-heart" /> Start by
+            searching for a recipe or an ingredient. Have fun!
+          </p>
         </div>
       ) : (
         <>
@@ -172,9 +188,7 @@ export const Recipe = () => {
               rel="noreferrer"
             >
               <span>Directions</span>
-              <svg className="search__icon">
-                <use href="src/img/icons.svg#icon-arrow-right"></use>
-              </svg>
+              <IoHeartOutline />
             </a>
           </div>
         </>
