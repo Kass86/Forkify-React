@@ -2,8 +2,8 @@
 
 Demo on Netlify: https://forkify-react-kass86.netlify.app/
 
-![Demo Pictures](https://www.photobox.co.uk/my/photo/full?photo_id=504604715144)
+![Demo Pictures](./src/reviewImg/Capture1.PNG)
 
-![Demo Pictures](https://www.photobox.co.uk/my/photo/full?photo_id=504604715859)
+![Demo Pictures](./src/reviewImg/Capture2.PNG)
 
-![Upload Recipe](https://www.photobox.co.uk/my/photo/full?photo_id=504604715694)
+![Upload Recipe](./src/reviewImg/Capture3.PNG)
