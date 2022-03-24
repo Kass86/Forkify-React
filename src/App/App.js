@@ -35,8 +35,6 @@ export const App = () => {
     });
   };
 
-  console.log(spinner);
-
   const value = {
     selected,
     setSelected,

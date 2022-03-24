@@ -18,7 +18,7 @@ export const Header = () => {
       `
     ).then((res) =>
       res.json().then((re) => {
-        console.log(re);
+        // console.log(re);
         stopSpinner("search");
         setSearchValue("");
         if (re.status === "fail") throw new Error(`${re.message}`);

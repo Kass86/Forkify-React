@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Result } from "../Result/Result";
 import { selectedContext } from "../App/App";
-import { IoRestaurantOutline } from "react-icons/io5";
+import {
+  IoRestaurantOutline,
+  IoArrowBackOutline,
+  IoArrowForwardOutline,
+} from "react-icons/io5";
 
 export const SearchResult = ({ res }) => {
   const { page, setPage, spinner } = useContext(selectedContext);
@@ -51,9 +55,7 @@ export const SearchResult = ({ res }) => {
             onClick={() => setPage((prev) => prev - 1)}
             className="btn--inline pagination__btn--prev"
           >
-            <svg className="search__icon">
-              <use href="src/img/icons.svg#icon-arrow-left"></use>
-            </svg>
+            <IoArrowBackOutline />
             <span>{`Page ${page - 1}`}</span>
           </button>
         ) : (
@@ -65,9 +67,7 @@ export const SearchResult = ({ res }) => {
             className="btn--inline pagination__btn--next"
           >
             <span>{`Page ${page + 1}`}</span>
-            <svg className="search__icon">
-              <use href="src/img/icons.svg#icon-arrow-right"></use>
-            </svg>
+            <IoArrowForwardOutline />
           </button>
         ) : (
           ""

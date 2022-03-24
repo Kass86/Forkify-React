@@ -50,7 +50,7 @@ export const Recipe = () => {
       res.json().then((re) => {
         stopSpinner("recipe");
         setRecipe(re.data.recipe);
-        console.log(re.data.recipe);
+        // console.log(re.data.recipe);
         //may not use usestate serving by use recipe.servings and setRecipe((prev)=> [...prev, servings: prev.servings + 1])
         setServing(re.data.recipe.servings);
       })
@@ -65,11 +65,8 @@ export const Recipe = () => {
         </div>
       ) : !recipe ? (
         <div className="message">
-          <div>
-            <svg>
-              <use href="src/img/icons.svg#icon-smile"></use>
-            </svg>
-          </div>
+          <br />
+          <br />
           <p>Start by searching for a recipe or an ingredient. Have fun!</p>
         </div>
       ) : (
