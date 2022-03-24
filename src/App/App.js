@@ -18,6 +18,24 @@ export const App = () => {
   );
   const [openModal, setOpenModal] = useState(false);
   const [recipeCreated, setRecipeCreated] = useState();
+  const [spinner, setSpinner] = useState({
+    search: false,
+    recipe: false,
+    modal: false,
+  });
+
+  const beginSpinner = (view) => {
+    setSpinner((prev) => {
+      return { ...prev, [view]: true };
+    });
+  };
+  const stopSpinner = (view) => {
+    setSpinner((prev) => {
+      return { ...prev, [view]: false };
+    });
+  };
+
+  console.log(spinner);
 
   const value = {
     selected,
@@ -32,6 +50,9 @@ export const App = () => {
     setOpenModal,
     recipeCreated,
     setRecipeCreated,
+    spinner,
+    beginSpinner,
+    stopSpinner,
   };
 
   useEffect(() => {
@@ -41,11 +62,12 @@ export const App = () => {
       { recipe: recipeCreated, id: recipeCreated.id },
     ]);
     setSelected(recipeCreated.id);
-    setTimeout(() => {
-      setOpenModal((prev) => {
-        return !prev;
-      });
-    }, 800);
+    // Auto close modal when updated data
+    // setTimeout(() => {
+    //   setOpenModal((prev) => {
+    //     return !prev;
+    //   });
+    // }, 800);
   }, [recipeCreated]);
 
   return (

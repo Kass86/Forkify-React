@@ -4,7 +4,8 @@ import { selectedContext } from "../App/App";
 import { IoSearchOutline, IoAddCircleOutline } from "react-icons/io5";
 
 export const Header = () => {
-  const { setPage, setResults, setOpenModal } = useContext(selectedContext);
+  const { setPage, setResults, setOpenModal, beginSpinner, stopSpinner } =
+    useContext(selectedContext);
   const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
@@ -13,14 +14,18 @@ export const Header = () => {
     if (!searchValue) return;
 
     fetch(
-      `https://forkify-api.herokuapp.com/api/v2/recipes/?search=${searchValue}&key=c099b868-5e15-453c-9558-59298a789d50`
+      `https://forkify-api.herokuapp.com/api/v2/recipes/?search=${searchValue}&key=cbc2d4f0-4cd9-4886-90b8-2743d93b88b8
+      `
     ).then((res) =>
       res.json().then((re) => {
         console.log(re);
-        setResults(re);
+        stopSpinner("search");
+        setSearchValue("");
         if (re.status === "fail") throw new Error(`${re.message}`);
+        setResults(re);
       })
     );
+
     setSearch(""); // clear search
   }, [searchValue, setResults]);
 
@@ -44,6 +49,7 @@ export const Header = () => {
             setSearchValue(search);
             setSearch("");
             setPage(1);
+            beginSpinner("search");
           }}
           className="btn search__btn"
         >

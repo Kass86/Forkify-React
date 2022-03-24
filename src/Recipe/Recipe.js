@@ -7,11 +7,21 @@ import {
   IoBookmarkOutline,
   IoAddCircleOutline,
   IoRemoveCircleOutline,
+  IoPerson,
+  IoCheckmarkOutline,
+  IoRestaurantOutline,
 } from "react-icons/io5";
 
 export const Recipe = () => {
-  const { selected, setSelected, bookmarked, setBookmarked } =
-    useContext(selectedContext);
+  const {
+    selected,
+    setSelected,
+    bookmarked,
+    setBookmarked,
+    beginSpinner,
+    stopSpinner,
+    spinner,
+  } = useContext(selectedContext);
   const [recipe, setRecipe] = useState();
   const [serving, setServing] = useState("");
   const id = window.location.hash.slice(1);
@@ -31,11 +41,14 @@ export const Recipe = () => {
 
   useEffect(() => {
     if (!selected) return;
+    beginSpinner("recipe");
     document.location.href = `/#${selected}`;
     fetch(
-      `https://forkify-api.herokuapp.com/api/v2/recipes/${selected}?key=c099b868-5e15-453c-9558-59298a789d50`
+      `https://forkify-api.herokuapp.com/api/v2/recipes/${selected}?key=cbc2d4f0-4cd9-4886-90b8-2743d93b88b8
+      `
     ).then((res) =>
       res.json().then((re) => {
+        stopSpinner("recipe");
         setRecipe(re.data.recipe);
         console.log(re.data.recipe);
         //may not use usestate serving by use recipe.servings and setRecipe((prev)=> [...prev, servings: prev.servings + 1])
@@ -46,7 +59,11 @@ export const Recipe = () => {
 
   return (
     <div className="recipe">
-      {!recipe ? (
+      {spinner.recipe ? (
+        <div className="spinner">
+          <IoRestaurantOutline />
+        </div>
+      ) : !recipe ? (
         <div className="message">
           <div>
             <svg>
@@ -95,10 +112,10 @@ export const Recipe = () => {
               </div>
             </div>
 
-            <div className="recipe__user-generated">
-              <svg>
-                <use href="src/img/icons.svg#icon-user"></use>
-              </svg>
+            <div
+              className={`recipe__user-generated ${recipe.key ? "" : "hidden"}`}
+            >
+              <IoPerson />
             </div>
             <button
               onClick={() => {
@@ -128,9 +145,7 @@ export const Recipe = () => {
               {recipe.ingredients.map((ing, i) => {
                 return (
                   <li className="recipe__ingredient" key={i}>
-                    <svg className="recipe__icon">
-                      <use href="src/img/icons.svg#icon-check"></use>
-                    </svg>
+                    <IoCheckmarkOutline className="recipe__icon" />
                     <div className="recipe__quantity">
                       {ing.quantity
                         ? (ing.quantity * serving) / recipe.servings

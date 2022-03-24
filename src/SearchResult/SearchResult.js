@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Result } from "../Result/Result";
 import { selectedContext } from "../App/App";
+import { IoRestaurantOutline } from "react-icons/io5";
 
 export const SearchResult = ({ res }) => {
-  const { page, setPage } = useContext(selectedContext);
+  const { page, setPage, spinner } = useContext(selectedContext);
   const [newRes, setNewRes] = useState([]);
   let numPage;
 
@@ -28,9 +29,20 @@ export const SearchResult = ({ res }) => {
           <p>No recipes found for your query! Please try another one!</p>
         </div>
       )}
-      <ul className="results">
-        {newRes ? newRes.map((rec, i) => <Result key={i} data={rec} />) : <></>}
-      </ul>
+
+      {spinner.search ? (
+        <div className="spinner">
+          <IoRestaurantOutline />
+        </div>
+      ) : (
+        <ul className="results">
+          {newRes ? (
+            newRes.map((rec, i) => <Result key={i} data={rec} />)
+          ) : (
+            <></>
+          )}
+        </ul>
+      )}
 
       {/* May be write it to component <pag /> receive {page,setpage,numpage}*/}
       <div className="pagination">
