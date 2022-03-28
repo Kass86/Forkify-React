@@ -20,10 +20,10 @@ export const Header = () => {
         .json()
         .then((re) => {
           // console.log(re);
+          setResults(re);
           stopSpinner("search");
           setSearchValue(undefined);
           if (re.status === "fail") throw new Error(`${re.message}`);
-          setResults(re);
         })
         .catch((err) =>
           alert(`We have some error with sever on <HeaderView>: ${err}`)
