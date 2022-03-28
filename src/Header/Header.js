@@ -21,7 +21,7 @@ export const Header = () => {
         .then((re) => {
           // console.log(re);
           stopSpinner("search");
-          // setSearchValue("");
+          setSearchValue(undefined);
           if (re.status === "fail") throw new Error(`${re.message}`);
           setResults(re);
         })
