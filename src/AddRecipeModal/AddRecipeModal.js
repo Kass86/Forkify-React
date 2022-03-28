@@ -71,10 +71,9 @@ export const AddRecipeModal = () => {
           .then((re) => {
             // console.log(re);
             if (re.status === "fail") throw new Error(`${re.message}`);
+            setRecipeCreated(re.data.recipe);
             stopSpinner("modal");
             setUploaded(true);
-
-            setRecipeCreated(re.data.recipe);
           })
           .catch((err) =>
             alert(`We have some error with sever on <RecipeView>: ${err}`)
@@ -86,7 +85,7 @@ export const AddRecipeModal = () => {
   useEffect(() => {
     if (openModal === false) {
       resetForm();
-      setNewRecipe(undefined);
+      setNewRecipe(undefined); // maybe dont need, but i found a bug if not write this code before
       setTimeout(() => {
         setUploaded(false);
         setError(false);

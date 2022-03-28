@@ -28,7 +28,7 @@ export const SearchResult = ({ res }) => {
 
   return (
     <div className="search-results">
-      {res?.results === 0 && (
+      {res?.data.recipes.length === 0 && (
         <div className="error">
           <p>No recipes found for your query! Please try another one!</p>
         </div>

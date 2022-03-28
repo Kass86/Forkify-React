@@ -7,12 +7,11 @@ export const Header = () => {
   const { setPage, setResults, setOpenModal, beginSpinner, stopSpinner } =
     useContext(selectedContext);
   const [search, setSearch] = useState("");
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState();
 
   useEffect(() => {
     //remember to catch the err
-    if (!searchValue) return;
-
+    if (!searchValue && searchValue !== "") return;
     fetch(
       `https://forkify-api.herokuapp.com/api/v2/recipes/?search=${searchValue}&key=cbc2d4f0-4cd9-4886-90b8-2743d93b88b8
       `
@@ -22,7 +21,7 @@ export const Header = () => {
         .then((re) => {
           // console.log(re);
           stopSpinner("search");
-          setSearchValue("");
+          // setSearchValue("");
           if (re.status === "fail") throw new Error(`${re.message}`);
           setResults(re);
         })
@@ -51,10 +50,9 @@ export const Header = () => {
           onClick={(e) => {
             // idk but its need a prevent default if not => error
             e.preventDefault();
-            setSearchValue(search);
-            setSearch("");
-            setPage(1);
-            beginSpinner("search");
+            setSearchValue(search); //change searchvalue to make a api call to get recipes.
+            setPage(1); // set page to 1
+            beginSpinner("search"); //spin effect
           }}
           className="btn search__btn"
         >
